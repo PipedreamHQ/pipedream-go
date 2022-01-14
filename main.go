@@ -17,7 +17,7 @@ var Steps map[string]interface{}
 
 func Export(name string, value interface{}) {
 	export, _ := json.Marshal(value)
-	env := getenv("PIPEDREAM_EXPORTS", "null")
+	env := getenv("PIPEDREAM_EXPORTS", "")
 	os.Setenv("PIPEDREAM_EXPORTS", env + name + ":json=" + string(export) + "\n")
 }
 
