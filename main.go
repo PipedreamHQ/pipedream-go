@@ -1,7 +1,8 @@
 package pd
 
 import (
- "os"
+	"encoding/json"
+	"os"
 )  
 
 func getenv(key, fallback string) string {
@@ -12,8 +13,11 @@ func getenv(key, fallback string) string {
     return value
 }
 
-var Steps string
+var Steps map[string]interface{}
 
 func init() {
-	Steps = getenv("PIPEDREAM_STEPS", "null")
+	pdSteps := []byte(getenv("PIPEDREAM_STEPS", "null"))
+	if err := json.Unmarshal(pdSteps, &Steps); err != nil {
+        panic(err)
+    }
 }
