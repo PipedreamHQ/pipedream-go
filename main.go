@@ -16,12 +16,8 @@ func getenv(key string, fallback string) string {
 var Steps map[string]interface{}
 
 func Export(name, value string) {
-	var export string
-	val := []byte(value)
-	if err := json.Unmarshal(val, &export); err != nil {
-        panic(err)
-    }
-	os.Setenv("PIPEDREAM_EXPORTS", name + ":json=" + export + "\n")
+	export, _ := json.Marshal(value)
+	os.Setenv("PIPEDREAM_EXPORTS", name + ":json=" + string(export) + "\n")
 }
 
 func init() {
