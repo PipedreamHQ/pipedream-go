@@ -1,7 +1,6 @@
 package pd
 
 import (
- "fmt"
  "os"
 )  
 
@@ -13,4 +12,8 @@ func getenv(key, fallback string) string {
     return value
 }
 
-Steps := getenv("PIPEDREAM_STEPS", "null")
+var Steps string
+
+func init() {
+	Steps = getenv("PIPEDREAM_STEPS", "null")
+}
