@@ -5,9 +5,9 @@ import (
 	"os"
 )
 
-func getenv(key string, fallback string) string {
-	value := os.Getenv(key)
-	if len(value) == 0 {
+func get(key string, fallback []byte) []byte {
+	value, _ := os.ReadFile(os.Getenv(key))
+	if value == nil || len(value) == 0 {
 		return fallback
 	}
 	return value
@@ -28,7 +28,7 @@ func Export(name string, value interface{}) {
 }
 
 func init() {
-	pdSteps := []byte(getenv("PIPEDREAM_STEPS", "null"))
+	pdSteps := []byte(get("PIPEDREAM_STEPS", []byte("null")))
 	if err := json.Unmarshal(pdSteps, &Steps); err != nil {
 		panic(err)
 	}
