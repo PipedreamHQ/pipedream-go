@@ -1,7 +1,7 @@
 # `pipedream-go`
 
 ```go
-ppackage main
+package main
 
 import (
 	"fmt"
