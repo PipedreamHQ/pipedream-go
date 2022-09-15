@@ -12,18 +12,29 @@ import (
 func main() {
 	// Access previous step data using pd.Steps
 	fmt.Println(pd.Steps)
+	
+	// Alternatively, unmarshal into a type
+	var steps Steps
+	pd.MustUnmarshal(&steps)
+	fmt.Println(steps.Trigger.Event)
 
 	// Export data using pd.Export
 	data := make(map[string]interface{})
 	data["name"] = "Luke"
 	pd.Export("data", data)
 }
+
+type Steps struct {
+	Trigger struct {
+		Event struct {
+			// ...
+		} `json:"event"`
+	} `json:"trigger"`
+}
 ```
 
 ## Tests
 
-Simulate the env vars present on the Pipedream execution environment when running `go test`
-
 ```bash
-PIPEDREAM_STEPS=./test-step-data.json PIPEDREAM_EXPORTS=./test-exports-data go test
+go test ./...
 ```
