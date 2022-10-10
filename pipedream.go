@@ -35,7 +35,10 @@ func Unmarshal(in interface{}) error {
 
 // Export exports data for subsequent steps to use
 func Export(name string, value interface{}) {
-	export, _ := json.Marshal(value)
+	export, err := json.Marshal(value)
+	if err != nil {
+		panic(err)
+	}
 	f, err := os.OpenFile(os.Getenv(ExportsEnv), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		panic(err)
